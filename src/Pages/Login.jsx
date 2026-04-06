@@ -31,6 +31,7 @@ export default function Login() {
             localStorage.setItem("hospital_id",data.hospital_id);
             localStorage.setItem("role",data.role);
             //get user info
+            console.log("Using API instance, baseURL:",import.meta.env.VITE_API_URL);
             const userRes=await api.get("/users/me",{
                 headers:{Authorization: `Bearer ${access_token}`}
             });
