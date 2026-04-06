@@ -1,7 +1,7 @@
 
 import { useEffect,useState } from "react";
 import Login from "./Pages/Login";
-import Hospitals from "./pages/Hospitals/Hospitals.jsx";
+import Hospitals from "./pages/Hospitals/Hospitals"
 import HospitalDetail from "./pages/Hospitals/HospitalDetail";
 import CreateHospital from "./Pages/Hospitals/CreateHospital";
 import Users from "./pages/Users/Users";
