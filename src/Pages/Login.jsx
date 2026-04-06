@@ -31,7 +31,7 @@ export default function Login() {
             localStorage.setItem("hospital_id",data.hospital_id);
             localStorage.setItem("role",data.role);
             //get user info
-            const userRes=await api.get("/users/users/me",{
+            const userRes=await api.get("/users/me",{
                 headers:{Authorization: `Bearer ${access_token}`}
             });
             const user=userRes?.data;
