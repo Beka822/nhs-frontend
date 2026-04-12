@@ -12,7 +12,6 @@ export default function CreateUser() {
         e.preventDefault()
         const token=localStorage.getItem("access_token")
         try {
-            console.log("CREATE USER PAYLOAD:",payload)
             await api.post("/users/",
                 {
                     user_id:userId,
