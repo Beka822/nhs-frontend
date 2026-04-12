@@ -36,6 +36,7 @@ export default function Login() {
                 headers:{Authorization: `Bearer ${access_token}`}
             });
             const user=userRes?.data;
+            console.log("USER RESPONSE:",userRes.data);
             localStorage.setItem("full_name",user.full_name || "");
             localStorage.setItem("role",user.role || "");
             //redirect based on role
