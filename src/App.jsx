@@ -28,9 +28,12 @@ import CreateWards from "./Wards/CreateWards";
 function App() {
   const [user,setUser]=useState(null)
   const getCurrentUser=async()=>{
+    const token=localStorage.getItem("access_token");
+    if (!token) return;
     try{
-      const res=await api.get("/users/users/me")
-      setUser(res.data)
+      const res=await api.get("/users/users/me");
+      console.log("APP USER:",res.data);
+      setUser(res.data);
     }catch(err){
       console.error(err)
     }
