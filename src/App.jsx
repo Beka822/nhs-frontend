@@ -53,7 +53,7 @@ function App() {
       <Route path="/" element={<Navigate to="/login" />} />
       {/*LOGIN*/}
       <Route path="/login" element={<Login 
-      setUser={setUser}/>} />
+      user={user}/>} />
       {/*HOSPITALS*/}
       <Route path="/hospitals" element={<DashboardLayout
         user={user}>
