@@ -31,7 +31,6 @@ export default function Hospitals({user}) {
                         Register Hospital
                     </button>
                 )}
-                console.log("Current user:",user)
             </div>
             {/*Hospitals Table*/}
             <div className="bg-white shadow rounded-lg overflow-hidden">
