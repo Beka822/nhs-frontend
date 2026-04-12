@@ -26,16 +26,23 @@ import api from "./api/axios";
 import {Routes,Route,Navigate} from "react-router-dom";
 import CreateWards from "./Wards/CreateWards";
 function App() {
+  console.log("APP RENDERED");
   const [user,setUser]=useState(null)
   const getCurrentUser=async()=>{
+    console.log("getUser CALLED");
     const token=localStorage.getItem("access_token");
-    if (!token) return;
+    console.log("TOKEN:",token);
+    if (!token){
+      console.log("NO TOKEN"); 
+      return;}
     try{
-      const res=await api.get("/users/users/me");
+      const res=await api.get("/users/users/me",{
+        headers:{Authorization: `Bearer ${token}`}
+      });
       console.log("APP USER:",res.data);
       setUser(res.data);
     }catch(err){
-      console.error(err)
+      console.error("GET USER ERROR:",err)
     }
   }
   useEffect(()=>{
