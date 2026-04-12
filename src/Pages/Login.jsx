@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
-export default function Login() {
+export default function Login({setUser}) {
     const navigate=useNavigate()
     const [formData,setFormData]=useState({
         user_id:"",
@@ -31,13 +31,13 @@ export default function Login() {
             localStorage.setItem("hospital_id",data.hospital_id);
             localStorage.setItem("role",data.role);
             navigate("/hospitals");
-            window.location.reload();
             //get user info
             console.log("Using API instance, baseURL:",import.meta.env.VITE_API_URL);
             const userRes=await api.get("/users/me",{
                 headers:{Authorization: `Bearer ${access_token}`}
             });
             const user=userRes?.data;
+            setUser(user);
             console.log("USER RESPONSE:",userRes.data);
             localStorage.setItem("full_name",user.full_name || "");
             localStorage.setItem("role",user.role || "");
