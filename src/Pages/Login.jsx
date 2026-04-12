@@ -30,7 +30,7 @@ export default function Login() {
             localStorage.setItem("refresh_token",refresh_token)
             localStorage.setItem("hospital_id",data.hospital_id);
             localStorage.setItem("role",data.role);
-            window.location.href="/hospitals";
+            navigate("/hospitals");
             //get user info
             console.log("Using API instance, baseURL:",import.meta.env.VITE_API_URL);
             const userRes=await api.get("/users/me",{
