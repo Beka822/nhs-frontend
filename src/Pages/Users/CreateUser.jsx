@@ -34,7 +34,8 @@ export default function CreateUser() {
             navigate(`/hospitals/${hospital_id}/users`)
         } catch (err){
             console.error("FULL ERROR:",err);
-            console.error("BACKEND RESPONSE:",err.response?.data)
+            console.error("BACKEND RESPONSE:",err.response?.data);
+            console.error("ERROR DETAILS:",err.response?.data?.error);
             alert("Failed to create user")
         }
     }
