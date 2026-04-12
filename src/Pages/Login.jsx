@@ -31,6 +31,7 @@ export default function Login() {
             localStorage.setItem("hospital_id",data.hospital_id);
             localStorage.setItem("role",data.role);
             navigate("/hospitals");
+            window.location.reload();
             //get user info
             console.log("Using API instance, baseURL:",import.meta.env.VITE_API_URL);
             const userRes=await api.get("/users/me",{
@@ -41,7 +42,9 @@ export default function Login() {
             localStorage.setItem("full_name",user.full_name || "");
             localStorage.setItem("role",user.role || "");
             //redirect based on role
-            if (user.role==="SUPER_ADMIN"){
+            if (user?.role==="SUPER_ADMIN" ||
+                localStorage.getItem("role") === "SUPER_ADMIN"
+            ){
                 navigate("/hospitals")
             }else if (user.role==="ADMIN"){
                 navigate(`/hospitals/${user.hospital_id}`)
