@@ -12,6 +12,13 @@ export default function CreateUser() {
         e.preventDefault()
         const token=localStorage.getItem("access_token")
         try {
+            console.log("PAYLOAD:",{
+                user_id:userId,
+                full_name:fullName,
+                hospital_id,
+                role,
+                password,
+            });
             await api.post("/users/",
                 {
                     user_id:userId,
@@ -25,8 +32,9 @@ export default function CreateUser() {
                 }
             )
             navigate(`/hospitals/${hospital_id}/users`)
-        } catch (error){
-            console.error(error)
+        } catch (err){
+            console.error("FULL ERROR:",err);
+            console.error("BACKEND RESPONSE:",err.response?.data)
             alert("Failed to create user")
         }
     }
