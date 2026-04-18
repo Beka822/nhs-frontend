@@ -49,7 +49,7 @@ export default function Login({setUser}) {
             }else if (user.role==="ADMIN"){
                 navigate(`/hospitals/${user.hospital_id}`)
             } else {
-                navigate("/dashboard")
+                navigate(`/hospitals/${user.hospital_id}`)
             }
         }catch(err){
             console.error("Login error:",err.response?.data || err.message || err);
