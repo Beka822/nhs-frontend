@@ -31,26 +31,26 @@ export default function HospitalRevenueCard(){
             {/*Header */}
             <div className="mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">
-                    {data?.hospital_name}
+                    {data?.hospital_name || "Hospital"}
                     </h2>
                     <p className="text-sm text-blue-600 font-medium">
-                        {data?.month} Summary
+                        {data?.month ? `${data.month} Summary`: "Summary"} 
                     </p>
             </div>
+            <pre className="text-xs bg-gray-100 p-2 rounded mb-4 overflow-x-auto">{JSON.stringify(data,null,2)}</pre>
                     <div className="border-t border-gray-200 mb-4"></div>
                     {/*Total Visits*/}
                     <div className="flex justify-between items-center mb-3">
                         <span className="text-gray-600">Total Visits</span>
                         <span className="font-semibold text-gray-800">
-                            {data?.total_visits}
+                            {data?.total_visits ?? 0}
                         </span>
                     </div>
                     {/*Total Revenue*/}
                     <div className="flex justify-between items-center mb-3">
-                        <span className="text-gray-600">Total Payout</span>
+                        <span className="text-gray-600">Total Revenue</span>
                         <span className="font-bold text-gray-900">
-                            KES
-                            {data?.total_revenue?.toLocaleString()}
+                            KES{(data?.total_revenue ?? 0).toLocaleString()}
                         </span>
                     </div>
                     {/*Clinic Earnings*/}
@@ -58,7 +58,7 @@ export default function HospitalRevenueCard(){
                         <span className="text-gray-600">Clinic Earnings</span>
                         <span className="font-bold text-green-600">
                             KES
-                            {data?.clinic_earnings?.toLocaleString()}
+                            {(data?.clinic_earnings ?? 0).toLocaleString()}
                         </span>
                     </div>
          </div>
