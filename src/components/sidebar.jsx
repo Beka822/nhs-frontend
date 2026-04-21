@@ -55,6 +55,11 @@ const Sidebar=()=>{
                                 <FaFileInvoiceDollar  text-lg/> 
                                 <span>Bills & Payments</span>
                             </Link>
+                            <Link to="/hospital/:hospital_id/payout"
+                            className={linkClass("/payout")}>
+                            <FaFileInvoiceDollar text-lg/>
+                            <span>Payouts</span>
+                            </Link>
                             </>
                         )}
                     </nav>

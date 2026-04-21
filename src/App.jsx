@@ -21,6 +21,7 @@ import TransferBed from "./Visits/TransferBed";
 import DischargePatient from "./Visits/DischargePatient";
 import BillsPage from "./Pages/Bills/BillsPage";
 import BillDetail from "./Pages/Bills/BillDetail";
+import HospitalRevenueCard from "./Pages/Visits/HospitalPay";
 import DashboardLayout from "./Layout/DashboardLayout";
 import api from "./api/axios";
 import {Routes,Route,Navigate} from "react-router-dom";
@@ -163,6 +164,11 @@ function App() {
       <Route path="/bills/:bill_id" element={
         <DashboardLayout user={user}>
           <BillDetail />
+        </DashboardLayout>
+      } />
+      <Route path="/hospital/:hospital_id/payout" element={
+        <DashboardLayout user={user}>
+          <HospitalRevenueCard />
         </DashboardLayout>
       } />
     </Routes>
