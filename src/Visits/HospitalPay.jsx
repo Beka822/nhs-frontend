@@ -12,6 +12,7 @@ export default function HospitalRevenueCard(){
             setData(res.data);
         } catch (err) {
             console.error("Error fetching revenue",err);
+            console.log(err.response?.data)
         } finally {
             setLoading(false);
         }
