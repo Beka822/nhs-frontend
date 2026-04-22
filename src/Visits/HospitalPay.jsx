@@ -40,7 +40,6 @@ export default function HospitalRevenueCard(){
                         {data?.month ? `${data.month} Summary`: "Summary"} 
                     </p>
             </div>
-            <pre className="text-xs bg-gray-100 p-2 rounded mb-4 overflow-x-auto">{JSON.stringify(data,null,2)}</pre>
                     <div className="border-t border-gray-200 mb-4"></div>
                     {/*Total Visits*/}
                     <div className="flex justify-between items-center mb-3">
