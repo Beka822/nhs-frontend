@@ -3,12 +3,12 @@ import api from "../api/axios";
 export default function HospitalRevenueCard(){
     const [data,setData]=useState(null);
     const [loading,setLoading]=useState(true);
+    const token=localStorage.getItem("token");
     useEffect(()=>{
         fetchRevenue();
     },[]);
     const fetchRevenue=async () =>{
         try{
-            const token=localStorage.getItem("token")
             const res=await api.get("/pay/payout",{
                 headers:{Authorization: `Bearer ${token}` }
             });
