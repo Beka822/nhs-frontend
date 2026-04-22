@@ -8,7 +8,9 @@ export default function HospitalRevenueCard(){
     },[]);
     const fetchRevenue=async () =>{
         try{
-            const res=await api.get("/pay/payout");
+            const res=await api.get("/pay/payout",{
+                headers:{Authorization: `Bearer ${token}` }
+            });
             setData(res.data);
         } catch (err) {
             console.error("Error fetching revenue",err);
