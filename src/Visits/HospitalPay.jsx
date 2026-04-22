@@ -8,6 +8,7 @@ export default function HospitalRevenueCard(){
     },[]);
     const fetchRevenue=async () =>{
         try{
+            const token=localStorage.getItem("token")
             const res=await api.get("/pay/payout",{
                 headers:{Authorization: `Bearer ${token}` }
             });
