@@ -28,7 +28,9 @@ const VisitDetail=()=>{
         fetchVisit();
     },[visit_id]);
     useEffect(()=>{
-        api.get(`/medical-files/patient/${patient_id}`)
+        api.get(`/medical-files/patient/${patient_id}`,{
+            headers:{Authorization: `Bearer ${token}`}
+        })
         .then((res)=>{
             setFiles(res.data);
         })
