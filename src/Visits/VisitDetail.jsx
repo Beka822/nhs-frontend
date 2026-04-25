@@ -13,9 +13,9 @@ const VisitDetail=()=>{
     useEffect(()=>{
         const fetchVisit=async ()=>{
             try{ 
-        const visitRes=await api.get(`/visits/${patient_id}/${visit_id}`,
+        const visitRes=await api.get(`/visits/${patient_id}/${visit_id}`,{
             headers:{Authorization: `Bearer ${token}`}
-        );
+            });
             setVisit(visitRes.data);
             const patientId=visitRes.data.patient_id;
             //once visit loads, fetch addendum using patient_id + visit_id
