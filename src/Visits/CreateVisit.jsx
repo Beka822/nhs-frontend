@@ -41,6 +41,7 @@ const CreateVisit=()=>{
             setPaymentStatus("pending");
             const Res=await api.post("/wallet/topup",{
                 phone_number:phone,
+                visit_id:visitId,
                 amount:20,
                 reference:reference
             },{
