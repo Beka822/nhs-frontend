@@ -91,7 +91,7 @@ const BillsPage=({token})=>{
         <div className="p-6 space-y-6">
             <div className="flex justify-end mb-4">
                 <button
-                onClick={()=>navigate("/hospitals/:hospital_id/services")}
+                onClick={()=>navigate(`/hospitals/${hospital_id}/services`)}
                 className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                     + Add Service
                 </button>
