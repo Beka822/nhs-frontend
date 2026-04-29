@@ -11,6 +11,7 @@ export default function CreateService(){
             name,
             price:parseFloat(price)
         });
+        navigate(`hospitals/${hospital_id}/bills`)
         setName("");
         setPrice("");
         alert("Service added");
