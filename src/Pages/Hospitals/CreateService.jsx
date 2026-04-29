@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import api from "../../api/axios";
 export default function CreateService(){
     const navigate=useNavigate();
+    const hospital_id=localStorage.getItem("hospital_id");
     const [name,setName]=useState("");
     const [price,setPrice]=useState("");
     const handleSubmit=async ()=>{
