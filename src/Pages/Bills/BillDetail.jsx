@@ -220,7 +220,7 @@ const BillDetail=({token,onClose,onSuccess})=>{
                                 setQuery(e.target.value);
                                 setSelectedServiceId(null);
                                 setShowSuggestions(true);
-                            }};
+                            }}
                             onFocus={()=>
                                 setShowSuggestions(true)
                             }
