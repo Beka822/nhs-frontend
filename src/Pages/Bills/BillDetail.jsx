@@ -48,7 +48,7 @@ const BillDetail=({token,onClose,onSuccess})=>{
     },[]);
     /*Fetch services*/
     useEffect(()=>{
-        api.get("services/").then(res=>setServices(res.data));
+        api.get("service/").then(res=>setServices(res.data));
     },[]);
     /*Filter services*/
     const filtered=services.filter(s=>

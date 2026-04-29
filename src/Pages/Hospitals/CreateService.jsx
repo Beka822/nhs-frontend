@@ -7,7 +7,7 @@ export default function CreateService(){
     const [name,setName]=useState("");
     const [price,setPrice]=useState("");
     const handleSubmit=async ()=>{
-        await api.post("/services/",{
+        await api.post("/service/",{
             name,
             price:parseFloat(price)
         });
