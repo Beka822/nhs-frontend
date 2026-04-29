@@ -15,7 +15,6 @@ export default function CreateService(){
         setPrice("");
         alert("Service added");
     };
-    navigate(`hospitals/${hospital_id}/bills`)
     return(
         <div className="space-y-3">
             <input
