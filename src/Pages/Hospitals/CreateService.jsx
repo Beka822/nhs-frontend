@@ -14,7 +14,7 @@ export default function CreateService(){
         setName("");
         setPrice("");
         alert("Service added");
-        navigate(`/hospitals/${hospital_id}/bills`,{
+        navigate(`/hospital/${hospital_id}/bills`,{
             replace:true
         });
     };
