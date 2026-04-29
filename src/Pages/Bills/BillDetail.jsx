@@ -1,8 +1,11 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api/axios";
-const BillDetail=({token})=>{
+const BillDetail=({token,onClose,onSuccess})=>{
     const {bill_id}=useParams();
+    const [services,setServices]=useState([]);
+    const [query,setQuery]=useState("");
+    const [selectedServiceId,setSelectedServiceId]=useState(null);
     const [bill,setBill]=useState(null);
     const [items,setItems]=useState([]);
     const [payments,setPayments]=useState([]);
@@ -10,10 +13,15 @@ const BillDetail=({token})=>{
     const [showPaymentModal,setShowPaymentModal]=useState(false);
     const [description,setDescription]=useState("");
     const [quantity,setQuantity]=useState(1);
+    const [showSuggestions,setShowSuggestions]=useState(false);
     const [unitPrice,setUnitPrice]=useState("");
     const [amount,setAmount]=useState("");
     const [method,setMethod]=useState("");
     const [reference,setReference]=useState("");
+    const inputRef=useRef();
+    useEffect(()=>{
+        inputRef.current?.focus();
+    },[]);
     /*FETCH DATA */
     const fetchBill=async ()=>{
         const res=await api.get(`/bills/${bill_id}`,{
@@ -38,22 +46,43 @@ const BillDetail=({token})=>{
         fetchItems();
         fetchPayments();
     },[]);
+    /*Fetch services*/
+    useEffect(()=>{
+        api.get("services/").then(res=>setServices(res.data));
+    },[]);
+    /*Filter services*/
+    const filtered=services.filter(s=>
+        s.name.toLowerCase().includes(query.toLowerCase())
+    );
+    /*Select service*/
+    const handleSelect=(service)=>{
+        setSelectedServiceId(service.service_id);
+        setQuery(service.name);
+        setUnitPrice(service.price);
+        setShowSuggestions(false);
+    };
     /*ADD ITEM*/
     const handleAddItem=async (e)=>{
         e.preventDefault();
         await api.post(`/bills/${bill_id}/items`,{
-            description,
+            service_id:selectedServiceId,
+            description:query,
             quantity,
             unit_price:unitPrice
         },{
             headers:{Authorization: `Bearer ${token}`}
         });
+        setQuery("");
+        setSelectedServiceId(null);
         setShowItemModal(false);
         setDescription("");
         setQuantity(1);
         setUnitPrice("");
+        setShowSuggestions(false);
         fetchItems();
         fetchBill();
+        onSuccess?.();//refresh parent
+        onClose(); //close modal
     };
     /*MAKE PAYMENT*/
     const handlePayment=async (e)=>{
@@ -182,18 +211,55 @@ const BillDetail=({token})=>{
                     <form onSubmit={handleAddItem}
                     className="bg-white p-6 rounded space-y-3">
                         <h2>Add Item</h2>
-                        <input placeholder="Description"
+                        <div className="relative">
+                            <input
+                            ref={inputRef}
+                            type="text"
+                            value={query}
+                            onChange={(e)=>{
+                                setQuery(e.target.value);
+                                setSelectedServiceId(null);
+                                setShowSuggestions(true);
+                            }};
+                            onFocus={()=>
+                                setShowSuggestions(true)
+                            }
+                            className="w-full border p-2 rounded"
+                            placeholder="search or type service" />
+                            {/*suggestions*/}
+                            {showSuggestions && filtered.length >0 && (
+                                <div className="absolute z-10 bg-white border w-full mt-1 rounded max-h-40 overflow-y-auto shadow">
+                                    {filtered.map((s)=>(
+                                        <div
+                                        key={s.service_id}
+                                        onClick={()=>
+                                            handleSelect(s)
+                                        }
+                                        className="p-2 hover:bg-gray-100 cursor-pointer flex justify-between">
+                                            <span>{s.name}</span>
+                                            <span className="text-sm text-gray-500">
+                                                KES {s.price}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        {/*<input placeholder="Description"
                         value={description}
                         onChange={(e)=>setDescription(e.target.value)}
-                        className="border p-2 w-full" />
+                        className="border p-2 w-full" />*/}
+                        {/*Quantity*/}
                         <input type="number"
                         value={quantity}
-                        onChange={(e)=>setQuantity(e.target.value)}
-                        className="border p-2 w-full" />
+                        onChange={(e)=>setQuantity(Number(e.target.value))}
+                        className="border p-2 w-full"
+                        placeholder="Quantity" />
+                        {/*Unit price (auto-filled but editable)*/}
                         <input type="number"
                         placeholder="Unit Price"
                         value={unitPrice}
-                        onChange={(e)=>setUnitPrice(e.target.value)}
+                        onChange={(e)=>setUnitPrice(Number(e.target.value))}
                         className="border p-2 w-full" />
                         <button className="bg-blue-600 text-white px-4 py-2 rounded">
                             Add

@@ -4,6 +4,7 @@ import Login from "./Pages/Login";
 import Hospitals from "./Pages/Hospitals/Hospitals"
 import HospitalDetail from "./Pages/Hospitals/HospitalDetail";
 import CreateHospital from "./Pages/Hospitals/CreateHospital";
+import CreateService from "./Pages/Hospitals/CreateService";
 import Users from "./Pages/Users/Users";
 import CreateUser from "./Pages/Users/CreateUser";
 import Wards from "./Wards/ward";
@@ -90,6 +91,11 @@ function App() {
         </DashboardLayout>
       }
       />
+      <Route path="/hospitals/:hospital_id/services" element={
+        <DashboardLayout user={user}>
+          <CreateService />
+          </DashboardLayout>
+      } />
       {/*WARDS*/}
       <Route path="/hospitals/:hospital_id/wards" element={
         <DashboardLayout user={user}>

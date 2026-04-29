@@ -89,6 +89,13 @@ const BillsPage=({token})=>{
     };
     return(
         <div className="p-6 space-y-6">
+            <div className="flex justify-end mb-4">
+                <button
+                onClick={()=>navigate("/hospitals/:hospital_id/services")}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                    + Add Service
+                </button>
+            </div>
             <h1 className="text-2xl font-bold text-gray-800">
                 Billing Dashboard
             </h1>
