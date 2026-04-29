@@ -11,10 +11,12 @@ export default function CreateService(){
             name,
             price:parseFloat(price)
         });
-        navigate(`hospitals/${hospital_id}/bills`)
         setName("");
         setPrice("");
         alert("Service added");
+        navigate(`/hospitals/${hospital_id}/bills`,{
+            replace:true
+        });
     };
     return(
         <div className="space-y-3">
