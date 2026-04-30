@@ -14,6 +14,7 @@ const VisitDetail=()=>{
     const [addendums,setAddendums]=useState([]);
     const [files,setFiles]=useState([]);
     const [selectedFile,setSelectedFile]=useState(null);
+    const isLocked=visit.status === "COMPLETED";
     const token=localStorage.getItem("token");
     useEffect(()=>{
         const fetchVisit=async ()=>{
@@ -128,7 +129,7 @@ const VisitDetail=()=>{
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <textarea
+                        <textarea disabled={isLocked}
                         value={symptoms}
                         onChange={(e)=>
                             setSymptoms(e.target.value)
@@ -137,7 +138,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea
+                        <textarea disabled={isLocked}
                         value={diagnosis}
                         onChange={(e)=>
                             setDiagnosis(e.target.value)
@@ -146,7 +147,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea
+                        <textarea disabled={isLocked}
                         value={treatment}
                         onChange={(e)=>
                             setTreatment(e.target.value)
@@ -155,7 +156,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea
+                        <textarea disabled={isLocked}
                         value={notes}
                         onChange={(e)=>
                             setNotes(e.target.value)
@@ -258,6 +259,9 @@ const VisitDetail=()=>{
             className="bg-blue-600 text-white px-4 py-2 rounded">
                 {loading ? "Saving...": "Save Consultation"}
             </button>
+            <p className="text-gray-500">
+                Visit completed. Use addendum for changes.
+            </p>
         </div>
     );
 };
