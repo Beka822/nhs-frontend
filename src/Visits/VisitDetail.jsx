@@ -2,7 +2,12 @@ import { useEffect,useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { FaNotesMedical,FaUserDoctor,FaClock } from "react-icons/fa6";
-const VisitDetail=()=>{
+const VisitDetail=({visit})=>{
+    const [symptoms,setSymptoms]=useState(visit.symptoms || "");
+    const [diagnosis,setDiagnosis]=useState(visit.diagnosis || "");
+    const [treatment,setTreatment]=useState(visit.treatment || "");
+    const [notes,setNotes]=useState(visit.notes || "");
+    const [loading,setLoading]=useState(false);
     const {patient_id,visit_id}=useParams();
     const navigate=useNavigate();
     const [visit,setVisit]=useState(null);
@@ -27,6 +32,18 @@ const VisitDetail=()=>{
         };
         fetchVisit();
     },[visit_id]);
+    const handleSave=async ()=>{
+        setLoading(true);
+        await api.put(`/visits/${visit_id}`,{
+            symptoms,
+            diagnosis,
+            treatment,
+            notes
+        });
+        setLoading(false);
+        alert("Visit updated successfully");
+        navigate(`/patients/${patient_id}`);
+    };
     useEffect(()=>{
         api.get(`/medical-files/patient/${patient_id}`,{
             headers:{Authorization: `Bearer ${token}`}
@@ -103,24 +120,40 @@ const VisitDetail=()=>{
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <p className="text-gray-500 text-sm">Symptoms</p>
-                        <p
-                        className="font-medium">{visit.symptoms}</p>
+                        <textarea
+                        value={symptoms}
+                        onChange={(e)=>
+                            setSymptoms(e.target.value)
+                        }
+                        placeholder="symptoms"
+                        className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <p className="text-gray-500 text-sm">Diagnosis</p>
-                        <p
-                        className="font-medium">{visit.diagnosis}</p>
+                        <textarea
+                        value={diagnosis}
+                        onChange={(e)=>
+                            setDiagnosis(e.target.value)
+                        }
+                        placeholder="Diagnosis"
+                        className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <p className="text-gray-500 text-sm">Treatment</p>
-                        <p
-                        className="font-medium">{visit.treatment}</p>
+                        <textarea
+                        value={treatment}
+                        onChange={(e)=>
+                            setTreatment(e.target.value)
+                        }
+                        placeholder="Treatment"
+                        className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <p className="text-gray-500 text-sm">Notes</p>
-                        <p
-                        className="font-medium">{visit.notes}</p>
+                        <textarea
+                        value={notes}
+                        onChange={(e)=>
+                            setNotes(e.target.value)
+                        }
+                        placeholder="Notes"
+                        className="w-full border p-2 rounded" />
                     </div>
                 </div>
                 <div className="flex gap-6 text-sm text-gray-500 mt-6">
@@ -210,6 +243,12 @@ const VisitDetail=()=>{
             onClick={handleCreateAdmission}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
                 Admit Patient
+            </button>
+            <button
+            onClick={handleSave}
+            disabled={loading}
+            className="bg-blue-600 text-white px-4 py-2 rounded">
+                {loading ? "Saving...": "Save Consultation"}
             </button>
         </div>
     );
