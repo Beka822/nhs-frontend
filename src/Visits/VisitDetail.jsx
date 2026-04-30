@@ -3,10 +3,10 @@ import { useParams,useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { FaNotesMedical,FaUserDoctor,FaClock } from "react-icons/fa6";
 const VisitDetail=()=>{
-    const [symptoms,setSymptoms]=useState(visit.symptoms || "");
-    const [diagnosis,setDiagnosis]=useState(visit.diagnosis || "");
-    const [treatment,setTreatment]=useState(visit.treatment || "");
-    const [notes,setNotes]=useState(visit.notes || "");
+    const [symptoms,setSymptoms]=useState("");
+    const [diagnosis,setDiagnosis]=useState("");
+    const [treatment,setTreatment]=useState("");
+    const [notes,setNotes]=useState("");
     const [loading,setLoading]=useState(false);
     const {patient_id,visit_id}=useParams();
     const navigate=useNavigate();
@@ -32,6 +32,14 @@ const VisitDetail=()=>{
         };
         fetchVisit();
     },[visit_id]);
+    useEffect(()=>{
+        if (visit){
+            setSymptoms(visit.symptoms || "");
+            setDiagnosis(visit.diagnosis || "");
+            setTreatment(visit.treatment || "");
+            setNotes(visit.notes || "");
+        }
+    },[visit]);
     const handleSave=async ()=>{
         setLoading(true);
         await api.put(`/visits/${visit_id}`,{
