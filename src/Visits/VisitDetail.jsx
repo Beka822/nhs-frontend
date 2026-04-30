@@ -129,7 +129,7 @@ const VisitDetail=()=>{
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div>
-                        <textarea disabled={isLocked}
+                        <textarea disabled={visit && visit.status==="COMPLETED"}
                         value={symptoms}
                         onChange={(e)=>
                             setSymptoms(e.target.value)
@@ -138,7 +138,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea disabled={isLocked}
+                        <textarea disabled={visit && visit.status==="COMPLETED"}
                         value={diagnosis}
                         onChange={(e)=>
                             setDiagnosis(e.target.value)
@@ -147,7 +147,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea disabled={isLocked}
+                        <textarea disabled={visit && visit.status==="COMPLETED"}
                         value={treatment}
                         onChange={(e)=>
                             setTreatment(e.target.value)
@@ -156,7 +156,7 @@ const VisitDetail=()=>{
                         className="w-full border p-2 rounded" />
                     </div>
                     <div>
-                        <textarea disabled={isLocked}
+                        <textarea disabled={visit && visit.status==="COMPLETED"}
                         value={notes}
                         onChange={(e)=>
                             setNotes(e.target.value)
