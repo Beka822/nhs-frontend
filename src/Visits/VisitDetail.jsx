@@ -42,12 +42,13 @@ const VisitDetail=()=>{
     },[visit]);
     const handleSave=async ()=>{
         setLoading(true);
-        await api.put(`/visits/${visit_id}`,{
+        const updated=await api.put(`/visits/${visit_id}`,{
             symptoms,
             diagnosis,
             treatment,
             notes
         });
+        setVisit(updated.data);
         setLoading(false);
         alert("Visit updated successfully");
         navigate(`/patients/${patient_id}`);
