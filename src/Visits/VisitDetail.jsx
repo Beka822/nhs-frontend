@@ -20,6 +20,7 @@ const VisitDetail=()=>{
             try{ 
         const visitRes=await api.get(`/visits/${patient_id}/${visit_id}`,{
             headers:{Authorization: `Bearer ${token}`}
+            console.log("FETCHED VISIT:",visitRes.data);
             });
             console.log("STATUS:",visit?.status);
             setVisit(visitRes.data);
@@ -49,6 +50,7 @@ const VisitDetail=()=>{
             treatment,
             notes
         });
+        console.log("UPDATED VISIT RESPONSE:",updated.data)
         setVisit(updated.data);
         setLoading(false);
         alert("Visit updated successfully");
@@ -261,9 +263,10 @@ const VisitDetail=()=>{
             className="bg-blue-600 text-white px-4 py-2 rounded">
                 {loading ? "Saving...": "Save Consultation"}
             </button>
+            {isLocked &&(
             <p className="text-gray-500">
                 Visit completed. Use addendum for changes.
-            </p>
+            </p> )}
         </div>
     );
 };
