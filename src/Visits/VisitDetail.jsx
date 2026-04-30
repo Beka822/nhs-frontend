@@ -14,7 +14,6 @@ const VisitDetail=()=>{
     const [addendums,setAddendums]=useState([]);
     const [files,setFiles]=useState([]);
     const [selectedFile,setSelectedFile]=useState(null);
-    const isLocked=visit.status === "COMPLETED";
     const token=localStorage.getItem("token");
     useEffect(()=>{
         const fetchVisit=async ()=>{
@@ -100,6 +99,7 @@ const VisitDetail=()=>{
     };
     if (!visit) return <div
     className="p-6">Loading visit...</div>;
+    const isLocked=visit?.status==="COMPLETED";
     const handleCreateAdmission=()=>{
         navigate(`/patients/${visit.patient_id}/visits/${visit.visit_id}/admit`,{
             state:{
