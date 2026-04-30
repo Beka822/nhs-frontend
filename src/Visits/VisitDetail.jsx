@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { FaNotesMedical,FaUserDoctor,FaClock } from "react-icons/fa6";
-const VisitDetail=({visit})=>{
+const VisitDetail=()=>{
     const [symptoms,setSymptoms]=useState(visit.symptoms || "");
     const [diagnosis,setDiagnosis]=useState(visit.diagnosis || "");
     const [treatment,setTreatment]=useState(visit.treatment || "");
