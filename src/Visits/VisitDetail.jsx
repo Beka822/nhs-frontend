@@ -20,9 +20,8 @@ const VisitDetail=()=>{
             try{ 
         const visitRes=await api.get(`/visits/${patient_id}/${visit_id}`,{
             headers:{Authorization: `Bearer ${token}`}
-            console.log("FETCHED VISIT:",visitRes.data);
             });
-            console.log("STATUS:",visit?.status);
+            console.log("FETCHED DATA:",visitRes.data);
             setVisit(visitRes.data);
             const patientId=visitRes.data.patient_id;
             //once visit loads, fetch addendum using patient_id + visit_id
