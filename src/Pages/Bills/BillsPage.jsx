@@ -5,43 +5,13 @@ const BillsPage=({token})=>{
     const [bills,setBills]=useState([]);
     const [showModal,setShowModal]=useState(false);
     const [visitId,setVisitId]=useState("");
-    const [period,setPeriod]=useState("today")
+    //const [period,setPeriod]=useState("today")
     const [admissionId,setAdmissionId]=useState("");
     const navigate=useNavigate();
     const hospital_id=localStorage.getItem("hospital_id");
-    const getDateRange=()=>{
-        const now= new Date();
-        if (period==="today") {
-            const start=new Date();
-            start.setHours(0,0,0,0);
-            return {start,end: new Date()};
-        }
-        if (period==="week") {
-            const start=new Date();
-            start.setDate(start.getDate() - start.getDay());
-            return {start,end: new Date()};
-        }
-        if (period==="month") {
-            return {
-                start: new Date(now.getFullYear(),now.getMonth(),1),
-                end: new Date()
-            };
-        }
-        if (period==="year"){
-            return {
-                start: new Date(now.getFullYear(),0,1),
-                end: new Date()
-            };
-        }
-    };
-    const fetchBills=async()=>{
-        const {start,end}=getDateRange();
+    const fetchBills=async(period)=>{
         try{
-            const res=await api.get(`/bills/bills`,{
-                params:{
-                    start_date:start.toISOString(),
-                    end_date:end.toISOString()
-                },
+            const res=await api.get(`/bills/bills?period=${period}`,{
                 headers:{Authorization: `Bearer ${token}`}
             });
             setBills(res.data);
@@ -107,9 +77,8 @@ const BillsPage=({token})=>{
                 Billing Dashboard
             </h1>
             <select
-            value={period}
             onChange={(e)=>
-                setPeriod(e.target.value)
+                fetchBills(e.target.value)
             }
             className="border px-3 py-2 rounded">
                 <option value="today">Today</option>
