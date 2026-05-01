@@ -5,11 +5,11 @@ const BillsPage=({token})=>{
     const [bills,setBills]=useState([]);
     const [showModal,setShowModal]=useState(false);
     const [visitId,setVisitId]=useState("");
-    //const [period,setPeriod]=useState("today")
+    const [period,setPeriod]=useState("today")
     const [admissionId,setAdmissionId]=useState("");
     const navigate=useNavigate();
     const hospital_id=localStorage.getItem("hospital_id");
-    const fetchBills=async(period)=>{
+    const fetchBills=async()=>{
         try{
             const res=await api.get(`/bills/bills?period=${period}`,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -77,8 +77,9 @@ const BillsPage=({token})=>{
                 Billing Dashboard
             </h1>
             <select
+            value={period}
             onChange={(e)=>
-                fetchBills(e.target.value)
+                setPeriod(e.target.value)
             }
             className="border px-3 py-2 rounded">
                 <option value="today">Today</option>
