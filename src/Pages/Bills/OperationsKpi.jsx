@@ -55,9 +55,9 @@ export default function OperationsKpi(){
                         period=${period}`,{
                             headers:{Authorization: `Bearer ${token}`}
                         }),
-                    api.get(`/dashboard/top-transfer-reasons?year=2026&month=5`,
+                    api.get(`/dashboard/top-transfer-reasons?year=2026&month=5`,{
                         headers:{Authorization: `Bearer ${token}`}
-                    ),
+                    }),
             ]);
             setData({
                 totalPatients: totalPatients.data,
