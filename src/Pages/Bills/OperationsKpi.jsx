@@ -72,6 +72,11 @@ export default function OperationsKpi(){
             console.error(err);
         }
     };
+    const getICUColor=(rate)=>{
+        if(rate >=90) return "text-red-600";
+        if(rate >=75) return "text-yellow-600";
+        return "text-green-600";
+    };
     //Derived values
     const latestVisit=
     data.visitTrend.at(-1)?.total || 0;
@@ -122,13 +127,17 @@ export default function OperationsKpi(){
                 insight="Hospital capacity usage" />
                 <Card
                 title="ICU Occupancy"
-                value={`${data.icu?.current?.rate || 0}%`}
+                value={
+                    <span
+                    className={getICUColor(data.icu?.current?.rate || 0)}>
+                        {data.icu?.current?.rate || 0}%
+                    </span>}
                 sub={`${data.icu?.current?.occupied || 0}/${data.icu?.current?.total || 0}`}
                 insight={data.icu?.alert?.message || "Normal"} />
             </div>
             {/*CHARTS ROW*/}
             <div className="grid grid-cols-3 gap-4">
-                {/*VISIT TREND*/}
+                {/*VISIT TREND
                 <ChartBox title="Daily Visits">
                     <ResponsiveContainer width="100%" height={200}>
                         <LineChart data={data.visitTrend}>
@@ -140,7 +149,7 @@ export default function OperationsKpi(){
                             dataKey="total" stroke="#3b82f6" />
                         </LineChart>
                     </ResponsiveContainer>
-                </ChartBox>
+                </ChartBox>*/}
                 {/*ADMISSIONS*/}
                 <ChartBox title="Admissions vs Discharges">
                     <ResponsiveContainer width="100%" height={200}>
@@ -234,9 +243,19 @@ export default function OperationsKpi(){
             {/*BOTTOM*/}
             <div className="bg-white p-4 rounded-xl shadow-sm">
                 <h3 className="font-medium mb-2">Daily Visit Trend</h3>
-                <div className="h-40 flex items-center justify-center text-gray-400">
-                    (Chart goes here)
-                    </div>
+                <ResponsiveContainer width="100%" height={250}>
+                    <LineChart data={data.visitTrend}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip content={<VisitTooltip />} />
+                        <Line
+                        type="monotone"
+                        dataKey="total"
+                        stroke="#3b82f6"
+                        strokeWidth={2} />
+                    </LineChart>
+                </ResponsiveContainer>
                     <p className="text-sm text-gray-500 mt-2">
                         Helps forecast demand patterns
                     </p>
@@ -275,4 +294,21 @@ function ChartBox({title,children}){
             {children}
         </div>
     );
+}
+/*TOOLTIP*/
+function VisitTooltip({active,payload,label}){
+    if (active && payload && payload.length){
+        const value=payload[0].value;
+        let insightt="Normal day";
+        if (value >150) insight="High patient volume";
+        else if (value<50) insight="Low patient turnout";
+        return(
+            <div className="bg-white p-3 border rounded shadow text-sm">
+                <p className="font-medium">{label}</p>
+                <p>Visits: {value}</p>
+                <p className="text-gray-500">{insight}</p>
+            </div>
+        );
+    }
+    return null;
 }
