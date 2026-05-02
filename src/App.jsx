@@ -21,7 +21,7 @@ import ActiveAdmissions from "./Visits/ActiveAdmissions";
 import TransferBed from "./Visits/TransferBed";
 import DischargePatient from "./Visits/DischargePatient";
 import BillsPage from "./Pages/Bills/BillsPage";
-import OperationsKpi from "./Pages/Bills/BillsPage";
+import OperationsKpi from "./Pages/Bills/OperationsKpi";
 import BillDetail from "./Pages/Bills/BillDetail";
 import HospitalRevenueCard from "./Visits/HospitalPay";
 import DashboardLayout from "./Layout/DashboardLayout";
