@@ -299,7 +299,7 @@ function ChartBox({title,children}){
 function VisitTooltip({active,payload,label}){
     if (active && payload && payload.length){
         const value=payload[0].value;
-        let insightt="Normal day";
+        let insight="Normal day";
         if (value >150) insight="High patient volume";
         else if (value<50) insight="Low patient turnout";
         return(
