@@ -178,7 +178,7 @@ function App() {
           <HospitalRevenueCard />
         </DashboardLayout>
       } />
-      <Route path="/hospital/:hospital_id/dashboard" element={
+      <Route path="/hospitals/:hospital_id/dashboard" element={
         <OperationsKpi />
       } />
     </Routes>
