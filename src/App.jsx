@@ -163,7 +163,7 @@ function App() {
           <DischargePatient/>
         </DashboardLayout>
       }/>
-      <Route path="/hospital/:hospital_id/bills" element={
+      <Route path="/hospitals/:hospital_id/bills" element={
         <DashboardLayout user={user}>
           <BillsPage />
         </DashboardLayout>
@@ -173,7 +173,7 @@ function App() {
           <BillDetail />
         </DashboardLayout>
       } />
-      <Route path="/hospital/:hospital_id/payout" element={
+      <Route path="/hospitals/:hospital_id/payout" element={
         <DashboardLayout user={user}>
           <HospitalRevenueCard />
         </DashboardLayout>
