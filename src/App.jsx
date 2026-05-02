@@ -168,10 +168,8 @@ function App() {
           <BillsPage />
         </DashboardLayout>
       } />
-      <Route path="/hospitals/:hospital_id/dashboard" element={
-        <DashboardLayout user={user}>
-          <OperationsKpi />
-        </DashboardLayout>
+      <Route path="dashboard" element={
+        <OperationsKpi />
       } />
       <Route path="/bills/:bill_id" element={
         <DashboardLayout user={user}>
