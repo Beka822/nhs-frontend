@@ -168,7 +168,7 @@ function App() {
           <BillsPage />
         </DashboardLayout>
       } />
-      <Route path="/hospitals/:hospital_id/operations" element={
+      <Route path="/hospital/:hospital_id/operations" element={
         <OperationsKpi />
       } />
       <Route path="/bills/:bill_id" element={

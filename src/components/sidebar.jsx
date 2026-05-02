@@ -55,7 +55,8 @@ const Sidebar=()=>{
                                 <FaFileInvoiceDollar  className="text-lg"/> 
                                 <span>Bills & Payments</span>
                             </Link>
-                            <Link to={`hospitals/${hospital_id}/operations`}>
+                            <Link to={`hospital/${hospital_id}/operations`}
+                            className={linkClass("/operations")}>
                                 <FaChartLine className="text-lg"/>
                                 <span> Operations KPIs</span>
                             </Link>
