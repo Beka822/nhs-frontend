@@ -52,12 +52,12 @@ const Sidebar=()=>{
                             </Link>
                             <Link to="/hospital/:hospital_id/bills"
                             className={linkClass("/bills")}>
-                                <FaFileInvoiceDollar  text-lg/> 
+                                <FaFileInvoiceDollar  className="text-lg"/> 
                                 <span>Bills & Payments</span>
                             </Link>
                             <Link to="/hospital/:hospital_id/operations"
                             className={linkClass("/operations")}>
-                                <FaChartLine text-lg />
+                                <FaChartLine className="text-lg"/>
                                 <span> Operations KPIs</span>
                             </Link>
                             <Link to="/hospital/:hospital_id/payout"
