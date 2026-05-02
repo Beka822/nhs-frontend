@@ -6,6 +6,7 @@ import{
     PieChart,Pie,Cell,
 } from "recharts";
 export default function OperationsKpi(){
+    const token=localStorage.getItem("token");
     const [period,setPeriod]=useState("month");
     const [data,setData]=useState({
         totalPatients:{},
@@ -30,18 +31,33 @@ export default function OperationsKpi(){
                 los,
                 transfers,
             ]=await Promise.all([
-                api.get("/dashboard/patients"),
+                api.get(`/dashboard/patients`,{
+                    headers:{Authorization: `Bearer ${token}`}
+                }
+                ),
                 api.get(`/dashboard/visits-trend?
-                    period=${period}`),
+                    period=${period}`,{
+                        headers:{Authorization: `Bearer ${token}`}
+                    }),
                     api.get(`/dashboard/ward-bor-trend?
-                        period=${period}`),
+                        period=${period}`,{
+                            headers:{Authorization: `Bearer ${token}`}
+                        }),
                     api.get(`/dashboard/admission-discharge-trend?
-                        period=${period}`),
+                        period=${period}`,{
+                            headers:{Authorization: `Bearer ${token}`}
+                        }),
                     api.get(`/dashboard/icu-occupancy?
-                        period=${period}`),
+                        period=${period}`,{
+                            headers:{Authorization: `Bearer ${token}`}
+                        }),
                     api.get(`/dashboard/los-analytics?
-                        period=${period}`),
-                    api.get(`/dashboard/top-transfer-reasons?year=2026&month=5`),
+                        period=${period}`,{
+                            headers:{Authorization: `Bearer ${token}`}
+                        }),
+                    api.get(`/dashboard/top-transfer-reasons?year=2026&month=5`,
+                        headers:{Authorization: `Bearer ${token}`}
+                    ),
             ]);
             setData({
                 totalPatients: totalPatients.data,
