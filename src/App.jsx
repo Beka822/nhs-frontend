@@ -21,6 +21,7 @@ import ActiveAdmissions from "./Visits/ActiveAdmissions";
 import TransferBed from "./Visits/TransferBed";
 import DischargePatient from "./Visits/DischargePatient";
 import BillsPage from "./Pages/Bills/BillsPage";
+import OperationsKpi from "./Pages/Bills/BillsPage";
 import BillDetail from "./Pages/Bills/BillDetail";
 import HospitalRevenueCard from "./Visits/HospitalPay";
 import DashboardLayout from "./Layout/DashboardLayout";
@@ -166,6 +167,9 @@ function App() {
         <DashboardLayout user={user}>
           <BillsPage />
         </DashboardLayout>
+      } />
+      <Route path="/hospital/:hospital_id/dashboard" element={
+        <OperationsKpi />
       } />
       <Route path="/bills/:bill_id" element={
         <DashboardLayout user={user}>

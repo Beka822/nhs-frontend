@@ -1,5 +1,5 @@
 import {Link,useLocation} from "react-router-dom";
-import { FaHome,FaHospital,FaUsers,FaBed,FaUserInjured,FaProcedures,FaFileInvoiceDollar } from "react-icons/fa";
+import { FaHome,FaHospital,FaUsers,FaBed,FaChartLine,FaUserInjured,FaProcedures,FaFileInvoiceDollar } from "react-icons/fa";
 const Sidebar=()=>{
     const role=localStorage.getItem("role");
     const hospital_id=localStorage.getItem("hospital_id");
@@ -54,6 +54,11 @@ const Sidebar=()=>{
                             className={linkClass("/bills")}>
                                 <FaFileInvoiceDollar  text-lg/> 
                                 <span>Bills & Payments</span>
+                            </Link>
+                            <Link to="/hospital/:hospital_id/dashboard"
+                            className={linkClass("/dashboard")}>
+                                <FaChartLine text-lg />
+                                <span> Operations KPIs</span>
                             </Link>
                             <Link to="/hospital/:hospital_id/payout"
                             className={linkClass("/payout")}>
