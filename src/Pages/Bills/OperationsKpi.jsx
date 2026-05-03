@@ -187,6 +187,8 @@ export default function OperationsKpi(){
                             data={data.transfers}
                             dataKey="percentage"
                             nameKey="reason"
+                            cx="40%"
+                            cy="50%"
                             outerRadius={80}
                             label
                             >
