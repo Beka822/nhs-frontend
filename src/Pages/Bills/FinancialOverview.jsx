@@ -28,8 +28,11 @@ export default function FinancialOverview(){
                 })
             ]);
             setData({
-                ...payments.data,
-                topServices:services.data
+                distribution:payments.data.distribution || [],
+                trend:payments.data.trend || [],
+                digital_vs_cash:payments.data.digital_vs_cash || [],
+                insurance_dependency:payments.data.insurance_dependency || 0,
+                topServices:services.data || []
             });
         } catch (err) {
             console.error(err);
@@ -97,7 +100,7 @@ export default function FinancialOverview(){
                 <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
                         <Pie
-                        data={data.distribution}
+                        data={data.distribution || []}
                         dataKey="percentage"
                         nameKey="method"
                         cx="40%"
@@ -116,7 +119,7 @@ export default function FinancialOverview(){
             <div className="bg-white p-4 rounded shadow">
                 <h3 className="mb-2">Revenue Trend</h3>
                 <ResponsiveContainer width="100%" height={250}>
-                    <LineChart data={data.trend}>
+                    <LineChart data={data.trend || []}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="date" />
                         <YAxis />
@@ -129,7 +132,7 @@ export default function FinancialOverview(){
             <div className="bg-white p-4 rounded shadow">
                 <h3 className="mb-2">Digital vs Cash</h3>
                 <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={data.digital_vs_cash}>
+                    <BarChart data={data.digital_vs_cash || []}>
                         <XAxis dataKey="category" />
                         <YAxis />
                         <Tooltip />
@@ -147,7 +150,7 @@ export default function FinancialOverview(){
             <div className="bg-white p-4 rounded shadow col-span-2">
                 <h3 className="mb-2">Top Services</h3>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={data.topServices}>
+                    <BarChart data={data.topServices || []}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis />
