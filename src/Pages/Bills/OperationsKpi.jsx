@@ -171,7 +171,7 @@ export default function OperationsKpi(){
                             <XAxis dataKey="date" />
                             <YAxis />
                             <Tooltip />
-                            <Line dataKey="rate" stroke="#f59e0b" />
+                            <Line dataKey="occupancy_rate" stroke="#f59e0b" />
                         </LineChart>
                     </ResponsiveContainer>
                 </ChartBox>
