@@ -129,10 +129,10 @@ export default function OperationsKpi(){
                 title="ICU Occupancy"
                 value={
                     <span
-                    className={getICUColor(data.icu?.current?.rate || 0)}>
-                        {data.icu?.current?.rate || 0}%
+                    className={getICUColor(data.icu?.current?.occupancy_rate || 0)}>
+                        {data.icu?.current?.occupancy_rate || 0}%
                     </span>}
-                sub={`${data.icu?.current?.occupied || 0}/${data.icu?.current?.total || 0}`}
+                sub={`${data.icu?.current?.occupied_beds || 0}/${data.icu?.current?.total_beds || 0}`}
                 insight={data.icu?.alert?.message || "Normal"} />
             </div>
             {/*CHARTS ROW*/}
