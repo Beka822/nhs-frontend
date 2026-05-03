@@ -3,10 +3,11 @@ import api from "../../api/axios";
 import{
     LineChart,Line,BarChart,Bar,XAxis,YAxis,
     Tooltip,ResponsiveContainer,CartesianGrid,
-    PieChart,Pie,Cell,
+    PieChart,Pie,Cell,Legend
 } from "recharts";
 export default function OperationsKpi(){
     const token=localStorage.getItem("token");
+    const COLORS=["#3b82f6","#10b981","#f59e0b","#ef4444","#6366f1"];
     const [period,setPeriod]=useState("month");
     const [data,setData]=useState({
         totalPatients:{},
@@ -186,13 +187,26 @@ export default function OperationsKpi(){
                             data={data.transfers}
                             dataKey="percentage"
                             nameKey="reason"
-                            outerRadius={80}>
-                                {data.transfers.map((_,i)=>
+                            outerRadius={80}
+                            label
+                            >
+                                {data.transfers.map((entry,index)=>
                                 (
-                                    <Cell key={i} />
+                                    <Cell key={index} fill={COLORS[index %
+                                        COLORS.length
+                                    ]} />
                                 ))} 
                             </Pie>
                             <Tooltip />
+                            <Legend
+                            layout="vertical"
+                            align="right"
+                            verticalAlign="middle"
+                            formatter={(value,entry,index)=>{
+                                const item=data.transfers[index];
+                                return `${value} (${item.percentage}%)`;
+                            }}
+                            />
                         </PieChart>
                     </ResponsiveContainer>
                 </ChartBox>
