@@ -5,6 +5,7 @@ import {ResponsiveContainer,PieChart,
     XAxis,YAxis,CartesianGrid,BarChart,Bar
 } from "recharts";
 const COLORS=["#3b82f6","#10b981","#f59e0b","#ef4444","#6366f1"];
+const token=localStorage.getItem("token");
 export default function FinancialOverview(){
     const [period,setPeriod]=useState("month");
     const [data,setData]=useState({
