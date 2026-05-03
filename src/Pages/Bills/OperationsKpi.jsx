@@ -200,15 +200,6 @@ export default function OperationsKpi(){
                                 ))} 
                             </Pie>
                             <Tooltip />
-                            <Legend
-                            layout="vertical"
-                            align="right"
-                            verticalAlign="middle"
-                            formatter={(value,entry,index)=>{
-                                const item=data.transfers[index];
-                                return `${value} (${item.percentage}%)`;
-                            }}
-                            />
                         </PieChart>
                     </ResponsiveContainer>
                 </ChartBox>
