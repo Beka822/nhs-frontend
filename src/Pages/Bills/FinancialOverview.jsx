@@ -1,11 +1,93 @@
-import {useEffect,useState} from "react";
+import {useEffect,useState,useRef} from "react";
 import api from "../../api/axios";
 import {ResponsiveContainer,PieChart,
     Pie,Cell,Tooltip,Legend,LineChart,Line,
     XAxis,YAxis,CartesianGrid,BarChart,Bar
 } from "recharts";
-const COLORS=["#3b82f6","#10b981","#f59e0b","#ef4444","#6366f1"];
 const token=localStorage.getItem("token");
+const COLORS=["#3b82f6","#10b981","#f59e0b","#ef4444","#6366f1"];
+const getYearMonth=()=>{
+    const now=new Date();
+    return{
+        year:now.getFullYear(),
+        month:now.getMonth() + 1
+    };
+};
+const downloadExcel=async ()=>{
+    const {year,month}=getYearMonth();
+    const res=await api.get(`/dashboard/monthly-excel?year=${year}&month=${month}`,{
+        headers:{Authorization: `Bearer ${token}`}
+    },{
+        responseType: "blob"
+    });
+    const url=window.URL.createobjectURL(new
+        Blob([res.data])
+    );
+    const link=document.createElement("a");
+    link.href=url;
+    link.download="report.xlsx";
+    link.click()
+};
+const downloadPDF=async ()=>{
+    const {year,month}=getYearMonth();
+    const res=await api.get(`/dashboard/monthly-pdf?year=${year}&month=${month}`,{
+        headers:{Authorization: `Bearer ${token}`}
+    },{
+        responseType: "blob"
+    });
+    const url=window.URL.createobjectURL(new
+        Blob([res.data]));
+        const link=document.createElement("a");
+        link.href=url;
+        link.download= "report.pdf";
+        link.click()
+};
+function ExportDropdown({downloadExcel,downloadPDF}){
+    const [open,setOpen]=useState(false);
+    const ref=useRef();
+    useEffect(()=>{
+        const handleClickOutside=(e)=>{
+            if (ref.current && !
+                ref.current.contains(e.target)
+            ){
+                setOpen(false);
+            }
+        };
+        document.addEventListener("mousedown",handleClickOutside);
+        return ()=>
+            document.removeEventListener("mousedown",handleClickOutside);
+    },[]);
+    return (
+        <div className="relative" ref={ref}>
+            <button
+            onClick={()=>setOpen(!open)}
+            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900">
+                Export
+            </button>
+            {open && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+                    <button
+                    onClick={()=>{
+                        downloadExcel();
+                        setOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Excel Report
+                    </button>
+                    <hr className="my-1 border-gray-200" />
+                    <button
+                    onClick={()=>{
+                        downloadPDF()
+                        setOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        PDF Report
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
 export default function FinancialOverview(){
     const [period,setPeriod]=useState("month");
     const [data,setData]=useState({
@@ -68,6 +150,10 @@ export default function FinancialOverview(){
                     <option value="month">This Month</option>
                     <option value="year">This Year</option>
                 </select>
+                <ExportDropdown
+                downloadExcel={downloadExcel}
+                downloadPDF={downloadPDF}
+                />
             </div>
             {/*ALERT*/}
             {alert && (
