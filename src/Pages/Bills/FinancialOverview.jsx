@@ -20,7 +20,7 @@ const downloadExcel=async ()=>{
     },{
         responseType: "blob"
     });
-    const url=window.URL.createobjectURL(new
+    const url=window.URL.createObjectURL(new
         Blob([res.data])
     );
     const link=document.createElement("a");
@@ -35,7 +35,7 @@ const downloadPDF=async ()=>{
     },{
         responseType: "blob"
     });
-    const url=window.URL.createobjectURL(new
+    const url=window.URL.createObjectURL(new
         Blob([res.data]));
         const link=document.createElement("a");
         link.href=url;
