@@ -20,13 +20,14 @@ const downloadExcel=async ()=>{
     },{
         responseType: "blob"
     });
-    const url=window.URL.createObjectURL(new
-        Blob([res.data])
-    );
+    const url=window.URL.createObjectURL(res.data);
     const link=document.createElement("a");
     link.href=url;
-    link.download="report.xlsx";
-    link.click()
+    link.setAttribute("download","report.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
 };
 const downloadPDF=async ()=>{
     const {year,month}=getYearMonth();
