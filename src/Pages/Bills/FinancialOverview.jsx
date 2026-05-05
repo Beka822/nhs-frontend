@@ -16,11 +16,12 @@ const getYearMonth=()=>{
 const downloadExcel=async ()=>{
     const {year,month}=getYearMonth();
     const res=await api.get(`/dashboard/monthly-excel?year=${year}&month=${month}`,{
-        headers:{Authorization: `Bearer ${token}`}
+        responseType:"arraybuffer",
     },{
-        responseType: "arraybuffer",
+        headers:{Authorization: `Bearer ${token}`}
     });
     console.log(res.data instanceof ArrayBuffer);
+    console.log("TYPE:",typeof res.data);
     const blob=new Blob([res.data],{
         type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
