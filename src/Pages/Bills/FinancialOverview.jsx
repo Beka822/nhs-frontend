@@ -20,6 +20,10 @@ const downloadExcel=async ()=>{
     },{
         responseType: "blob"
     });
+    if (!(res.data instanceof Blob)) {
+        console.error("Not a blob:",res.data);
+        return;
+    }
     const url=window.URL.createObjectURL(res.data);
     const link=document.createElement("a");
     link.href=url;
