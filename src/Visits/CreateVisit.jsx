@@ -30,7 +30,7 @@ const CreateVisit=()=>{
             [e.target.name]: e.target.value
         });
     };
-    const handlePayment = async ()=>{
+    {/*const handlePayment = async ()=>{
         if (paymentStatus==="pending") return;
         const reference=visitId
         ? `visit_${visitId}`
@@ -59,7 +59,7 @@ const CreateVisit=()=>{
             setPaymentStatus("failed");
             
         }
-    };
+    };*/}
     useEffect(()=>{
         const token=localStorage.getItem("token");
         if (!visitId || !isPaying ) return;
