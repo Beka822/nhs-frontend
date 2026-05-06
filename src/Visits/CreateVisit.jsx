@@ -60,7 +60,7 @@ const CreateVisit=()=>{
             
         }
     };*/}
-    useEffect(()=>{
+   {/* useEffect(()=>{
         const token=localStorage.getItem("token");
         if (!visitId || !isPaying ) return;
         if (intervalRef.current) return;
@@ -115,7 +115,7 @@ const CreateVisit=()=>{
             if (intervalRef.current){
             clearInterval(intervalRef.current);
             intervalRef.current=null;}}
-    },[visitId, isPaying]);
+    },[visitId, isPaying]);*/}
     const handleSubmit=async (e)=>{
         e.preventDefault();
         try{
@@ -217,7 +217,7 @@ const CreateVisit=()=>{
                     className="w-full border rounded-lg p-2"
                     />
                 </div>
-                {showPaymentModal && (
+                {/*{showPaymentModal && (
                     <div className="modal">
                         <h3>Pay KES 50 to create visit</h3>
                         <input
@@ -250,7 +250,7 @@ const CreateVisit=()=>{
                                 </button>
                             )}
                     </div>
-                )}
+                )}*/}
                 <button
                 onClick={handleSubmit}
                 disabled={showPaymentModal}
