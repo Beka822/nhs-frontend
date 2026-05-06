@@ -32,7 +32,7 @@ export default function OperationsKpi(){
                 los,
                 transfers,
             ]=await Promise.all([
-                api.get(`/dashboard/patients`,{
+                api.get(`/dashboard/patients?period=${period}`,{
                     headers:{Authorization: `Bearer ${token}`}
                 }
                 ),
