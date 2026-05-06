@@ -65,11 +65,11 @@ const Sidebar=()=>{
                                 <FaHandHoldingUsd className="text-lg" />
                                 <span> Financial Overview</span>
                             </Link>
-                            <Link to="/hospitals/:hospital_id/payout"
+                            {/*<Link to="/hospitals/:hospital_id/payout"
                             className={linkClass("/payout")}>
                             <FaFileInvoiceDollar text-lg/>
                             <span>Payouts</span>
-                            </Link>
+                            </Link>*/}
                             </>
                         )}
                     </nav>

@@ -42,7 +42,7 @@ const CreateVisit=()=>{
             const Res=await api.post("/wallet/topup",{
                 phone_number:phone,
                 visit_id:visitId,
-                amount:20,
+                amount:50,
                 reference:reference
             },{
                 headers:{
@@ -219,7 +219,7 @@ const CreateVisit=()=>{
                 </div>
                 {showPaymentModal && (
                     <div className="modal">
-                        <h3>Pay KES 20 to create visit</h3>
+                        <h3>Pay KES 50 to create visit</h3>
                         <input
                         type="text"
                         placeholder="Enter phone number"
