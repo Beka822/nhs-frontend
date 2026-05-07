@@ -77,7 +77,7 @@ const CreateAdmission=({token})=>{
                 headers:{Authorization: `Bearer ${token}`},
             });
             alert("Patient admitted successfully!");
-            navigate(`/admission/active?hospital_id=${hospital_id}`);
+            navigate(`/active-admissions`);
         } catch (err) {
             console.error("Error creating admission:",err);
             alert(err.response?.data?.detail || "Error creating admission");

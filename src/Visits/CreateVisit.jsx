@@ -132,6 +132,8 @@ const CreateVisit=()=>{
         {
             headers:{"Content-Type": "application/json"}
         });
+        alert("Visit created succesfully");
+        navigate(`/patients/${patient_id}`);
         const data=await res.data;
         if (data.status === "PENDING" && data.visit){
             setVisitId(data.visit.visit_id);
@@ -148,7 +150,7 @@ const CreateVisit=()=>{
     };
     const finalizeVisit=async ()=>{
         const token=localStorage.getItem("token");
-        await api.post("/visits/",{
+            await api.post("/visits/",{
             hospital_id:hospital_id,
             patient_id:patient_id,
             symptoms:formData.symptoms,
