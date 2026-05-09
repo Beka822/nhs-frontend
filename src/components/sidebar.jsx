@@ -38,12 +38,12 @@ const Sidebar=()=>{
                             <Link to="/hospitals/:hospital_id/pharmacy"
                             className={linkClass("/pharmacy")}>
                                 <FaUserInjured className="text-lg" />
-                                <Span>Pharmacy</Span>
+                                <span>Pharmacy</span>
                             </Link>
                             <Link to="/hospitals/:hospital_id/pharmacysales"
                             className={linkClass("/pharmacy")}>
                                 <FaChartLine className="text-lg" />
-                                <Span>Pharmacy Dashboard</Span>
+                                <span>Pharmacy Dashboard</span>
                             </Link>
                            {/*} <Link to="/hospitals/:hospital_id/wards"
                             className={linkClass("/wards")}>
