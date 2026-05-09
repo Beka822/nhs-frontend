@@ -22,12 +22,12 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
         const trendRes=await api.get(`/pharmacy-sales/revenue-trend?period=${period}`);
         const profitTrendRes=await api.get(`/pharmacy-sales/profit-trend?period=${period}`);
         const lowRes=api.get(`/pharmacy-sales/low-stock`);
-        setSummary(summaryRes.data);
-        setTopSelling(topRes.data);
-        setPayments(paymentRes.data);
-        setTrend(trendRes.data);
-        setProfitTrend(profitTrendRes.data);
-        setLowStock(lowRes.data);
+        setSummary(summaryRes.data || []);
+        setTopSelling(topRes.data || []);
+        setPayments(paymentRes.data || []);
+        setTrend(trendRes.data || []);
+        setProfitTrend(profitTrendRes.data || []);
+        setLowStock(lowRes.data || []);
     };
     return(
         <div className="p-6 bg-gray-100 min-h-screen">
@@ -69,8 +69,8 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                 insight="Current stock value"
                 />
                 <Card title="Low Stock"
-                value={lowStock.length}
-                danger={lowStock.length > 0}
+                value={lowStock?.length || 0}
+                danger={lowStock?.length > 0 || 0}
                 />
             </div>
             {/*CHARTS*/}
@@ -171,7 +171,7 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                             </tr>
                         </thead>
                         <tbody>
-                            {lowStock.map((drug)=>(
+                            {lowStock?.map((drug)=>(
                                 <tr
                                 key={drug.drug_id}
                                 className="border-b">

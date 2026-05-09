@@ -32,7 +32,7 @@ export default function HospitalDetail({user}) {
                 className="text-gray-600">County:{hospital.county}</p>
                 <p
                 className="text-gray-600">Created At:{new
-                    Date(hospital.created_at).toLocaleDateString()}</p>
+                Date(hospital.created_at).toLocaleDateString()}</p>
             </div>
             {/*Management Section*/}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
@@ -52,7 +52,7 @@ export default function HospitalDetail({user}) {
                     </p>
                 </div>
                 {/*Wards*/}
-                <div
+                {/*<div
                 onClick={()=>
                     navigate(`/hospitals/${hospital.hospital_id}/wards`)
                 }
@@ -67,7 +67,7 @@ export default function HospitalDetail({user}) {
                     </p>
                 </div>
                 {/*patients*/}
-                <div
+                {/*<div
                 onClick={()=>
                     navigate(`/patients/search`)
                 }
@@ -81,7 +81,7 @@ export default function HospitalDetail({user}) {
                     </p>
                 </div>
                 {/*Active Admissions*/}
-                <div onClick={()=>navigate("/active-admissions")}
+                {/*<div onClick={()=>navigate("/active-admissions")}
                 className="bg-white shadow rounded-lg p-6 cursor-pointer hover:shadow-lg">
                     <FaBed className="w-12 h-12 text-gray-700 mb-4" />
                     <h2 className="text-lg font-semibold text-gray-800">
@@ -89,7 +89,7 @@ export default function HospitalDetail({user}) {
                     </h2>
                 </div>
                 {/*Bills*/}
-                <div
+                {/*<div
                 onClick={()=>navigate(`/hospital/${hospital_id}/bills`)}
                 className="bg-white shadow-md rounded-lg p-6 cursor-pointer hover:shadow-lg transition border">
                     <div className="flex items-center space-x-4">
@@ -103,8 +103,8 @@ export default function HospitalDetail({user}) {
                     <p className="text-sm text-gray-500">
                         Manage hospital billing
                     </p>
-                </div>
+                </div>*/}
             </div>
-            </div>
+        </div>
     )
 }
