@@ -196,7 +196,7 @@ function App() {
           <Pharmacy />
         </DashboardLayout>
       } />
-      <Route path="/hospitals/:hospital_id/pharmacysale" element={
+      <Route path="/hospitals/:hospital_id/pharmacysales" element={
         <DashboardLayout user={user}>
           <PharmacyDashboard />
         </DashboardLayout>
