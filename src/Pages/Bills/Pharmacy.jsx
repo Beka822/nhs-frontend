@@ -349,7 +349,7 @@ function Modal({
         </div>
     );
 }
-function Input({
+{/*function Input({
     label,
     name,
     value,
@@ -370,4 +370,4 @@ function Input({
             />
         </div>
     );
-}
+}*/}
