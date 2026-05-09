@@ -23,6 +23,8 @@ import DischargePatient from "./Visits/DischargePatient";
 import BillsPage from "./Pages/Bills/BillsPage";
 import OperationsKpi from "./Pages/Bills/OperationsKpi";
 import FinancialOverview from "./Pages/Bills/FinancialOverview";
+import Pharmacy from "./Pages/Bills/Pharmacy";
+import PharmacyDashboard from "./Pages/Bills/PharmacyDashboard";
 import BillDetail from "./Pages/Bills/BillDetail";
 import HospitalRevenueCard from "./Visits/HospitalPay";
 import DashboardLayout from "./Layout/DashboardLayout";
@@ -187,6 +189,16 @@ function App() {
       <Route path="/hospitals/:hospital_id/finance" element={
         <DashboardLayout user={user}>
           <FinancialOverview />
+        </DashboardLayout>
+      } />
+      <Route path="/hospitals/:hospital_id/pharmacy" element={
+        <DashboardLayout user={user}>
+          <Pharmacy />
+        </DashboardLayout>
+      } />
+      <Route path="/hospitals/:hospital_id/pharmacysale" element={
+        <DashboardLayout user={user}>
+          <PharmacyDashboard />
         </DashboardLayout>
       } />
     </Routes>

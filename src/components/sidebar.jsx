@@ -35,7 +35,17 @@ const Sidebar=()=>{
                                 <FaUsers className="text-lg" /> 
                                 <span>Users</span>
                             </Link>
-                            <Link to="/hospitals/:hospital_id/wards"
+                            <Link to="/hospitals/:hospital_id/pharmacy"
+                            className={linkClass("/pharmacy")}>
+                                <FaUserInjured className="text-lg" />
+                                <Span>Pharmacy</Span>
+                            </Link>
+                            <Link to="/hospitals/:hospital_id/pharmacysales"
+                            className={linkClass("/pharmacy")}>
+                                <FaChartLine className="text-lg" />
+                                <Span>Pharmacy Dashboard</Span>
+                            </Link>
+                           {/*} <Link to="/hospitals/:hospital_id/wards"
                             className={linkClass("/wards")}>
                                 <FaBed text-lg /> 
                                 <span>Wards</span>
