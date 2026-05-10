@@ -332,6 +332,13 @@ function Modal({
                     value={formData.reorder_level}
                     handleChange={handleChange}
                     />
+                    <Input
+                    label="Expiry Date"
+                    name="expiry_date"
+                    type="date"
+                    value={formData.expiry_date || ""}
+                    handleChange={handleChange}
+                    />
                 </div>
                 <div className="flex justify-end gap-3 mt-6">
                     <button

@@ -8,6 +8,9 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
     const [period,setPeriod]=useState("month");
     const [summary,setSummary]=useState({});
     const [profitTrend,setProfitTrend]=useState([]);
+    const [nearExpiry,setNearExpiry]=useState([]);
+    const [expiredDrugs,setExpiredDrugs]=useState([]);
+    const [inventoryAtRisk,setInventoryAtRisk]=useState([]);
     const [topSelling,setTopSelling]=useState([]);
     const [payments,setPayments]=useState([]);
     const [trend,setTrend]=useState([]);
@@ -21,12 +24,18 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
         const paymentRes=await api.get(`/pharmacy-sales/payment-distribution?period=${period}`);
         const trendRes=await api.get(`/pharmacy-sales/revenue-trend?period=${period}`);
         const profitTrendRes=await api.get(`/pharmacy-sales/profit-trend?period=${period}`);
+        const nearExpiryRes=await api.get("/drugs/near-expiry");
+        const expiredRes=await api.get("/drugs/expired");
+        const riskRes=await api.get("/drugs/expiring-value");
         const lowRes=api.get(`/pharmacy-sales/low-stock`);
         setSummary(summaryRes.data || []);
         setTopSelling(topRes.data || []);
         setPayments(paymentRes.data || []);
         setTrend(trendRes.data || []);
         setProfitTrend(profitTrendRes.data || []);
+        setNearExpiry(nearExpiryRes.data || []);
+        setExpiredDrugs(expiredRes.data || []);
+        setInventoryAtRisk(riskRes.data || []);
         setLowStock(lowRes.data || []);
     };
     return(
@@ -56,13 +65,17 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                 value={`KES ${summary.revenue || 0}`}
                 insight="Total pharmacy revenue"
                 />
-                <Card title="Sales"
+                <Card title="Sold"
                 value={summary.total_sales || 0}
                 insight="Drugs sold"
                 />
                 <Card title="Profit"
                 value={`KES ${summary.profit || 0}`}
                 insight="Estimated pharmacy profit"
+                />
+                <Card title="Profit Margin"
+                value={`${summary.profit_margin || 0}%`}
+                insight="Average pharmacy profit margin"
                 />
                 <Card title="Inventory Value"
                 value={`KES ${summary.inventory_value || 0}`}
@@ -72,6 +85,54 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                 value={lowStock?.length || 0}
                 danger={lowStock?.length > 0 || 0}
                 />
+                <Card title="Near Expiry"
+                value={nearExpiry?.length || 0}
+                insight="Expiring within 30 days"
+                danger={nearExpiry?.length > 0}
+                />
+                <Card title="Expired Drugs"
+                value={expiredDrugs?.length || 0}
+                insight="Require immediate removal"
+                danger={expiredDrugs?.length > 0}
+                />
+                <Card title="Inventory At Risk"
+                value={`KES ${inventoryAtRisk?.reduce((sum,item)=>sum + item.inventory_value,0)?.toFixed(0) || 0}`}
+                insight="Stock nearing expiry"
+                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {/*NEAR EXPIRY*/}
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="text-yellow-600 text-xl">
+
+                            </span>
+                            <h3 className="font-semibold text-yellow-800">
+                                Expiry Warning
+                            </h3>
+                        </div>
+                        <p className="text-sm text-yellow-700">
+                            {nearExpiry?.length || 0}
+                            {""}
+                            drugs expire within 30 days
+                        </p>
+                    </div>
+                    {/*EXPIRED*/}
+                    <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="text-red-600 text-xl">
+                                X
+                            </span>
+                            <h3 className="font-semibold text-red-800">
+                                Expired Drugs
+                            </h3>
+                        </div>
+                        <p className="text-sm text-red-700">
+                            {expiredDrugs?.length || 0}
+                            {""}
+                            drugs already expired
+                        </p>
+                    </div>
+                </div>
             </div>
             {/*CHARTS*/}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-2">
@@ -138,6 +199,28 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                     </ResponsiveContainer>
                 </div>
             </div>
+            {/*INVENTORY AT RISK BAR CHART*/}
+            <div className="bg-white rounded-xl shadow-sm p-4">
+                <div className="mb-4">
+                    <h3 className="font-semibold">
+                        Inventory At Risk
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                        Highest value drugs nearing expiry
+                    </p>
+                </div>
+                <ResponsiveContainer width="100%" height={320}>
+                    <BarChart data={inventoryAtRisk}>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="inventory_value"
+                        fill="#dc2626"
+                        radius={[8,8,0,0]}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
             {/*TOP SELLING*/}
             <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
                 <h3 className="font-semibold mb-4">
@@ -155,6 +238,70 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                         />
                     </BarChart>
                 </ResponsiveContainer>
+            </div>
+            {/*EXPIRY TABLE*/}
+            <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
+                <div className="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 className="font-semibold">
+                            Near Expiry Inventory
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                            Drugs requiring urgent attention
+                        </p>
+                    </div>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead>
+                            <tr className="border-b text-left text-sm">
+                                <th className="py-3">
+                                    Drug
+                                </th>
+                                <th>
+                                    Stock
+                                </th>
+                                <th>
+                                    Expiry Date
+                                </th>
+                                <th>
+                                    Days Remaining
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {nearExpiry?.map((drug,index)=>(
+                                <tr
+                                key={index}
+                                className="border-b text-sm">
+                                    <td className="py-3 font-medium">
+                                        {drug.name}
+                                    </td>
+                                    <td>
+                                        {drug.quantity_in_stock}
+                                    </td>
+                                    <td>
+                                        {drug.expiry_date}
+                                    </td>
+                                    <td>
+                                        <span
+                                        className={`px-2 py-1 rounded-full text-xs font-medium
+                                            ${
+                                                drug.days_remaining <= 7
+                                                ? "bg-red-100 text-red-700"
+                                                :drug.days_remaining <= 30
+                                                ? "bg-yellow-100 text-yellow-700"
+                                                : "bg-green-100 text-green-700"
+                                            }`}
+                                            >
+                                                {drug.days_remaining} days
+                                            </span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {/*LOW STOCK*/}
             <div className="bg-white rounded-xl shadow-sm p-4">
