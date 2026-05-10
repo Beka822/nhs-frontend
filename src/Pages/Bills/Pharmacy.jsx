@@ -1,6 +1,5 @@
 import { useEffect,useState } from "react";
 import api from "../../api/axios";
-import { Input } from "postcss";
 export default function Pharmacy(){
     const [drugs,setDrugs]=useState([]);
     const [showAddModal,setShowAddModal]=useState(false);
@@ -14,6 +13,7 @@ export default function Pharmacy(){
         buying_price:"",
         selling_price:"",
         quantity_in_stock:"",
+        expiry_date:"",
         reorder_level:""
     });
     const [dispenseData,setDispenseData]=useState({
@@ -51,6 +51,7 @@ export default function Pharmacy(){
             buying_price:"",
             selling_price:"",
             quantity_in_stock:"",
+            expiry_date:"",
             reorder_level:""
         });
     };
@@ -73,6 +74,7 @@ export default function Pharmacy(){
             buying_price:drug.buying_price,
             selling_price:drug.selling_price,
             quantity_in_stock:drug.quantity_in_stock,
+            expiry_date:drug.expiry_date,
             reorder_level:drug.reorder_level
         });
         setShowEditModal(true);
