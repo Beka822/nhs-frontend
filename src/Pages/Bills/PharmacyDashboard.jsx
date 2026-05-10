@@ -99,34 +99,34 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                 value={`KES ${inventoryAtRisk?.reduce((sum,item)=>sum + item.inventory_value,0)?.toFixed(0) || 0}`}
                 insight="Stock nearing expiry"
                 />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     {/*NEAR EXPIRY*/}
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="text-yellow-600 text-xl">
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 min-h-[140px]">
+                        <div className="flex items-start gap-3 mb-2">
+                            <span className="text-yellow-600 text-3xl">
 
                             </span>
-                            <h3 className="font-semibold text-yellow-800">
+                            <h3 className="font-semibold text-yellow-800 text-lg mb-2 break-words">
                                 Expiry Warning
                             </h3>
                         </div>
-                        <p className="text-sm text-yellow-700">
+                        <p className="text-sm text-yellow-700 leading-relaxed break-words">
                             {nearExpiry?.length || 0}
                             {""}
                             drugs expire within 30 days
                         </p>
                     </div>
                     {/*EXPIRED*/}
-                    <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="text-red-600 text-xl">
+                    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 min-h-[140px]">
+                        <div className="flex items-start gap-3 mb-2">
+                            <span className="text-red-600 text-3xl">
                                 X
                             </span>
-                            <h3 className="font-semibold text-red-800">
+                            <h3 className="font-semibold text-red-800 text-lg mb-2 break-words">
                                 Expired Drugs
                             </h3>
                         </div>
-                        <p className="text-sm text-red-700">
+                        <p className="text-sm text-red-700 leading-relaxed break-words">
                             {expiredDrugs?.length || 0}
                             {""}
                             drugs already expired
