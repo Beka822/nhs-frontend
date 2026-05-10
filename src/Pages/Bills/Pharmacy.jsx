@@ -200,7 +200,7 @@ export default function Pharmacy(){
             </div>
             {/*ADD MODAL*/}
             {showAddModal && (
-                <Modal
+                <DrugModal
                 title="Add Drug"
                 formData={formData}
                 handleChange={handleChange}
@@ -211,7 +211,7 @@ export default function Pharmacy(){
             )}
             {/*EDIT MODAL*/}
             {showEditModal && (
-                <Modal
+                <DrugModal
                 title="Edit Drug"
                 formData={formData}
                 handleChange={handleChange}
@@ -278,7 +278,7 @@ export default function Pharmacy(){
         </div>
     );
 }
-function Modal({
+function DrugModal({
     title,
     formData,
     handleChange,
@@ -293,46 +293,46 @@ function Modal({
                     {title}
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
-                    <Input
+                    <FormInput
                     label="Drug Name"
                     name="name"
                     value={formData.name}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Category"
                     name="category"
                     value={formData.category}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Unit"
                     name="unit"
                     value={formData.unit}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Buying Price"
                     name="buying_price"
                     type="number"
                     value={formData.buying_price}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Stock Quantity"
                     name="quantity_in_stock"
                     type="number"
                     value={formData.quantity_in_stock}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Reorder Level"
                     name="reorder_level"
                     type="number"
                     value={formData.reorder_level}
                     handleChange={handleChange}
                     />
-                    <Input
+                    <FormInput
                     label="Expiry Date"
                     name="expiry_date"
                     type="date"
@@ -356,7 +356,7 @@ function Modal({
         </div>
     );
 }
-{/*function Input({
+function FormInput({
     label,
     name,
     value,
@@ -377,4 +377,4 @@ function Modal({
             />
         </div>
     );
-}*/}
+}
