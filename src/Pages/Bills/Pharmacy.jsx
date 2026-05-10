@@ -321,6 +321,13 @@ function DrugModal({
                     handleChange={handleChange}
                     />
                     <FormInput
+                    label="Selling Price"
+                    name="selling_price"
+                    type="number"
+                    value={formData.selling_price}
+                    handleChange={handleChange}
+                    />
+                    <FormInput
                     label="Stock Quantity"
                     name="quantity_in_stock"
                     type="number"
