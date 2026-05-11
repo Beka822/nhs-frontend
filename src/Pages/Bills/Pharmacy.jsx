@@ -4,6 +4,7 @@ export default function Pharmacy(){
     const [drugs,setDrugs]=useState([]);
     const [showAddModal,setShowAddModal]=useState(false);
     const [showEditModal,setShowEditModal]=useState(false);
+    const [showExportMenu,setShowExportMenu]=useState(false);
     const [showDispenseModal,setShowDispenseModal]=useState(false);
     const [selectedDrug,setSelectedDrug]=useState(null);
     const [formData,setFormData]=useState({
@@ -55,6 +56,31 @@ export default function Pharmacy(){
             reorder_level:""
         });
     };
+    const exportInventory=async()=>{
+        try{
+            const response=await api.get("/export/inventory",
+                {
+                    responseType:"blob"
+                }
+            );
+            const blob=new Blob(
+                [response.data],{
+                    type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                }
+            );
+            const url=window.URL.createObjectURL(blob);
+            const link=document.createElement("a");
+            link.href=url;
+            link.download="inventory_export.xlsx";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error){
+            console.error(error);
+            alert("Export failed");
+        }
+    }
     const createDrug=async()=>{
         try{
             await api.post("/drugs/",formData);
@@ -133,7 +159,43 @@ export default function Pharmacy(){
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
                     + Add Drug
                 </button>
-            </div>
+                <div className="relative">
+                <button
+                onClick={()=>
+                setShowExportMenu(
+                !showExportMenu)}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                Export
+                </button>
+                {/*DROPDOWN*/}
+                {showExportMenu &&(
+                <div
+                className="absolute right-0 mt-2 w-56 bg-white border rounded-xl shadow-lg z-50 overflow-hidden">
+                {/*INVENTORY*/}
+                <button
+                onClick={()=>{
+                exportInventory();
+                setShowExportMenu(false);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm">
+                Export Inventory
+                </button>
+                <div className="border-t" />
+                {/*FUTURE*/}
+                <button
+                disabled
+                className="w-full text-left px-4 py-3 text-sm text-gray-400">
+                Export Sales (Coming Soon)
+                </button>
+                <button
+                disabled
+                className="w-full text-left px-4 py-3 text-sm text-gray-400">
+                Full Backup (Coming Soon)
+                </button>
+                </div>
+                )}
+             </div>
+        </div>
             {/*TABLE*/}
             <div className="bg-white rounded-xl shadow-sm overflow-x-auto">
                 <table className="w-full">
@@ -279,7 +341,7 @@ export default function Pharmacy(){
             )}
         </div>
     );
-}
+    }
 function DrugModal({
     title,
     formData,
