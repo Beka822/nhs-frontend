@@ -105,6 +105,28 @@ export default function Pharmacy(){
             alert("Sales export failed");
         }
     };
+    const downloadFullBackup=async()=>{
+        try{
+            const response=await api.get("/export/full-backup",{
+                responseType:"blob"
+            });
+            const blob=new Blob([response.data],{
+                type:"application/zip"
+            });
+            const url=window.URL.createObjectURL(blob);
+            const link=document.createElement("a");
+            link.href=url;
+            link.download="pharmacy_backup.zip";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        }
+        catch (error){
+            console.error(error);
+            alert("Backup download failed");
+        }
+    };
     const createDrug=async()=>{
         try{
             await api.post("/drugs/",formData);
@@ -207,17 +229,20 @@ export default function Pharmacy(){
                 <div className="border-t" />
                 {/*FUTURE*/}
                 <button
-                disabled
-                className="w-full text-left px-4 py-3 text-sm text-gray-400">
-                Export Sales (Coming Soon)
-                </button>
-                <button
                 onClick={()=>{
                     exportSales();
                     setShowExportMenu(false);
                 }}
                 className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm">
                     Export Sales
+                </button>
+                <button
+                onClick={()=>{
+                    downloadFullBackup();
+                    setShowExportMenu(false);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm">
+                    Download Full Backup
                 </button>
                 </div>
                 )}
