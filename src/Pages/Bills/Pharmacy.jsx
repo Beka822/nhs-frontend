@@ -80,7 +80,31 @@ export default function Pharmacy(){
             console.error(error);
             alert("Export failed");
         }
-    }
+    };
+    const exportSales=async()=>{
+        try{
+            const response=await api.get("/export/sales",{
+                responseType:"blob"
+            });
+            const blob=new Blob([response.data],
+                {
+                    type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                }
+            );
+            const url=window.URL.createObjectURL(blob);
+            const link=document.createElement("a");
+            link.href=url;
+            link.download="sales_export.xlsx";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        }
+        catch (error){
+            console.error(error);
+            alert("Sales export failed");
+        }
+    };
     const createDrug=async()=>{
         try{
             await api.post("/drugs/",formData);
@@ -188,9 +212,12 @@ export default function Pharmacy(){
                 Export Sales (Coming Soon)
                 </button>
                 <button
-                disabled
-                className="w-full text-left px-4 py-3 text-sm text-gray-400">
-                Full Backup (Coming Soon)
+                onClick={()=>{
+                    exportSales();
+                    setShowExportMenu(false);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-gray-100 text-sm">
+                    Export Sales
                 </button>
                 </div>
                 )}
