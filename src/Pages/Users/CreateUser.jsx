@@ -85,6 +85,7 @@ export default function CreateUser() {
                     <option value="DOCTOR">Doctor</option>
                     <option value="NURSE">Nurse</option>
                     <option value="STAFF">Staff</option>
+                    <option value="PHARMACIST">pharmacist</option>
                 </select>
                 <input
                 type="password"
