@@ -48,8 +48,10 @@ export default function Login({setUser}) {
                 navigate("/hospitals")
             }else if (user.role==="ADMIN"){
                 navigate(`/hospitals/${user.hospital_id}`)
+            } else if (user.role==="PHARMACIST"){
+                navigate(`/hospitals/${user.hospital_id}/pharmacy`)
             } else {
-                navigate(`/hospitals/${user.hospital_id}`)
+                navigate(`/hospital/${user.hospital_id}`)
             }
         }catch(err){
             console.error("Login error:",err.response?.data || err.message || err);
