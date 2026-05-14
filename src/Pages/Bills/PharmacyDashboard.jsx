@@ -435,14 +435,14 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
             </p>
             <p className="text-gray-700 mb-2">
                 <span className="font-semibold">
-                    Financial Impact
+                    Financial Impact:
                 </span>
                 {""}
                 {impact}
             </p>
             <p className="text-gray-700">
                 <span className="font-semibold">
-                    Recommended Action
+                    Recommended Action:
                 </span>
                 {""}
                 {action}
