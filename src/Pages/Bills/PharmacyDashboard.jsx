@@ -12,6 +12,7 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
     const [expiredDrugs,setExpiredDrugs]=useState([]);
     const [inventoryAtRisk,setInventoryAtRisk]=useState([]);
     const [topSelling,setTopSelling]=useState([]);
+    const [intelligence,setIntelligence]=useState(null);
     const [payments,setPayments]=useState([]);
     const [trend,setTrend]=useState([]);
     const [lowStock,setLowStock]=useState([]);
@@ -19,6 +20,7 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
         fetchDashboard();
     },[period]);
     const fetchDashboard=async()=>{
+        const intelligenceRes=await api.get("/intelligence/")
         const summaryRes=await api.get(`/pharmacy-sales/summary?period=${period}`);
         const topRes=await api.get(`/pharmacy-sales/top-selling?period=${period}`);
         const paymentRes=await api.get(`/pharmacy-sales/payment-distribution?period=${period}`);
@@ -29,6 +31,7 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
         const riskRes=await api.get("/drugs/expiring-value");
         const lowRes=api.get(`/pharmacy-sales/low-stock`);
         setSummary(summaryRes.data || []);
+        setIntelligence(intelligenceRes.data || []);
         setTopSelling(topRes.data || []);
         setPayments(paymentRes.data || []);
         setTrend(trendRes.data || []);
@@ -59,6 +62,54 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                     <option value="year">This Year</option>
                 </select>
             </div>
+            {intelligence && (
+                <div className="space-y-4 mb-6">
+                    <InsightCard
+                    title="Inventory Loss Risk"
+                    severity="warning"
+                    problem={`${intelligence.inventory_loss_risk.count}
+                    products are overstocked relative to demand`}
+                    impact={`KES ${intelligence.inventory_loss_risk.financial_exposure}
+                    tied in excess inventory`}
+                    action={intelligence.inventory_loss_risk.recommended_action}
+                    />
+                    <InsightCard
+                    title="Expiry Exposure"
+                    severity="danger"
+                    problem={`${intelligence.expiry_exposure.count}
+                    products may expire within 45 days`}
+                    impact={`KES ${intelligence.expiry_exposure.financial_exposure}
+                    at risk`}
+                    action={intelligence.expiry_exposure.recommended_action}
+                    />
+                    <InsightCard
+                    title="Revenue Leakage"
+                    severity="warning"
+                    problem={`${intelligence.revenue_leakage.count}
+                    high-volume products
+                    have low margins`}
+                    impact={`Estimated monthly loss:
+                        KES ${intelligence.revenue_leakage.estimated_loss}`}
+                    action={intelligence.revenue_leakage.recommended_action}
+                    />
+                    <InsightCard
+                    title="Stock-out Prediction"
+                    severity="danger"
+                    problem={`${intelligence.stockout_predictions.count}
+                    products may run out soon`}
+                    impact={intelligence.stockout_predictions.items?.[0]
+                        ?
+                        `Highest risk: ${intelligence.stockout_predictions.items[0].drug}
+                        (${intelligence.stockout_predictions.items[0].days_left}
+                        days left)`
+                        :
+                        "No immediate stock-out risk"
+                    }
+                    action={intelligence.stockout_predictions.recommended_action}
+                    />
+                </div>
+
+            )}
             {/*KPI CARDS*/}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <Card title="Revenue"
@@ -355,6 +406,46 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
             </p>
             <p className="text-xs text-gray-400 mt-2">
                 {insight}
+            </p>
+        </div>
+    );
+ }
+ function InsightCard({
+    title,
+    problem,impact,action,severity
+ }){
+    const colors={
+        warning:"border-yellow-400 bg-yellow-50",
+        danger:"border-red-400 bg-red-50",
+        success:"border-green-400 bg-green-50"
+    };
+    return(
+        <div
+        className={`border-l-4 rounded-xl p-5 shadow-sm ${colors[severity]}`}
+        >
+            <h3 className="text-lg font-bold mb-2">
+                {title}
+            </h3>
+            <p className="text-gray-700 mb-2">
+                <span className="font-semibold">
+                    Problem:
+                </span>
+                {""}
+                {problem}
+            </p>
+            <p className="text-gray-700 mb-2">
+                <span className="font-semibold">
+                    Financial Impact
+                </span>
+                {""}
+                {impact}
+            </p>
+            <p className="text-gray-700">
+                <span className="font-semibold">
+                    Recommended Action
+                </span>
+                {""}
+                {action}
             </p>
         </div>
     );
