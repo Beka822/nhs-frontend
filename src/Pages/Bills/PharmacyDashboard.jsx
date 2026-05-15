@@ -124,27 +124,9 @@ import { LineChart,Line,XAxis,YAxis,Tooltip,
                 value={`KES ${summary.profit || 0}`}
                 insight="Estimated pharmacy profit"
                 />
-                <Card title="Profit Margin"
-                value={`${summary.profit_margin || 0}%`}
-                insight="Average pharmacy profit margin"
-                />
                 <Card title="Inventory Value"
                 value={`KES ${summary.inventory_value || 0}`}
                 insight="Current stock value"
-                />
-                <Card title="Low Stock"
-                value={lowStock?.length || 0}
-                danger={lowStock?.length > 0 || 0}
-                />
-                <Card title="Near Expiry"
-                value={nearExpiry?.length || 0}
-                insight="Expiring within 30 days"
-                danger={nearExpiry?.length > 0}
-                />
-                <Card title="Expired Drugs"
-                value={expiredDrugs?.length || 0}
-                insight="Require immediate removal"
-                danger={expiredDrugs?.length > 0}
                 />
                 <Card title="Inventory At Risk"
                 value={`KES ${inventoryAtRisk?.reduce((sum,item)=>sum + item.inventory_value,0)?.toFixed(0) || 0}`}
